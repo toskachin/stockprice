@@ -3,14 +3,14 @@
 
 ## 每日涨停板 
 
-![image](20220513.png)
+![image](images/20220513.png)
 
 ## 个股查询
 
-![image](stockprice.png)
+![image](images/stockprice.png)
 
 ## 实时新闻查看
-![image](livenews.png)
+![image](images/livenews.png)
 
 
 > 功能还在不断完善中...
