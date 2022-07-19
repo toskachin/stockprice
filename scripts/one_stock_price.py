@@ -2,13 +2,19 @@
 
 import akshare as ak
 import argparse
+import datetime
 
+today = datetime.datetime.now().strftime("%Y%m%d")
+delay = datetime.timedelta(days = 3)
+before = today - timedelta(days=3)
+print(delay)
+print(before)
 
 def getArgs():
     parser = argparse.ArgumentParser(description='查询股票最近几天的价格')
     parser.add_argument('-i', '--stock_id', help='stock id', dest="stock_id",required=True)
-    parser.add_argument('-s', '--start_date', help='start date', dest="start_date",required=True)
-    parser.add_argument('-e', '--end_date', help='end date', dest="end_date",required=True)
+    parser.add_argument('-s', '--start_date', help='start date', dest="start_date",default=today)
+    parser.add_argument('-e', '--end_date', help='end date', dest="end_date",required=before)
     args = parser.parse_args()
     return args
 

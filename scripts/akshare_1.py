@@ -5,27 +5,39 @@ import pandas as pd
 import datetime
 import argparse
 
+today = datetime.datetime.now().strftime("%Y%m%d")
 
 def getArgs():
     parser = argparse.ArgumentParser(description='涨停股票信息')
-    parser.add_argument('-d', '--date', help='date', dest="date",required=True)
+    parser.add_argument('-d', '--date', help='date', dest="date",default=today)
     args = parser.parse_args()
     return args
 
 if __name__ == "__main__":
 	args = getArgs()
 
-today = datetime.datetime.now().strftime("%Y%m%d")
-#连板股票池
-#表头 代码  名称  总市值  最后封板时间  连板数  所属行业
 
+#涨停股票池
+#表头 代码  名称  流通市值  最后封板时间  连板数  所属行业
 stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)
-lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]
+lb_data = stock_zt_pool_em_df.iloc[:,[1,2,6,11,14,15]]
 lb = lb_data.sort_values(by=['连板数'], ascending=False)
-lb_filter = lb.loc[lb['连板数'] >= 2]
 print(args.date + "涨停股票池")
 print(lb)
-lb.to_csv('daily_lb_{}.txt'.format(args.date),index=False)
+lb.to_csv('daily_lb_total_{}.txt'.format(args.date),index=False)
+
+
+
+#连板股票池
+#表头 代码  名称  流通市值  最后封板时间  连板数  所属行业
+
+stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)
+lb_data = stock_zt_pool_em_df.iloc[:,[1,2,6,11,14,15]]
+lb = lb_data.sort_values(by=['连板数'], ascending=False)
+lb_filter = lb.loc[lb['连板数'] >= 2]
+print(args.date + "连板涨停股票池")
+print(lb_filter )
+lb_filter.to_csv('daily_lb_{}.txt'.format(args.date),index=False)
 
 
 #炸板股池
